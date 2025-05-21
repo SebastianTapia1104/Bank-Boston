@@ -11,83 +11,95 @@ public class Cliente {
     private String telefono;
     private Cuenta cuenta;
     
-	public Cliente(String rut, String nombre, String apellidoPaterno, String apellidoMaterno, String domicilio,
-			String comuna, String telefono, Cuenta cuenta) {
-		if (rut.length() < 11 || rut.length() > 12) {
-            System.out.println("Error: El Rut debe tener entre 11 y 12 caracteres (incluyendo puntos y guion).");
-        }
-		this.rut = rut;
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.domicilio = domicilio;
-		this.comuna = comuna;
-		this.telefono = telefono;
-		this.cuenta = cuenta;
-	}
+    public Cliente(String rut, String nombre, String apellidoPaterno, String apellidoMaterno, String domicilio,
+                    String comuna, String telefono, Cuenta cuenta) {
+            if (rut.length() < 11 || rut.length() > 12) {
+        System.out.println("Error: El Rut debe tener entre 11 y 12 caracteres (incluyendo puntos y guion).");
+    }
+            this.rut = rut;
+            this.nombre = nombre;
+            this.apellidoPaterno = apellidoPaterno;
+            this.apellidoMaterno = apellidoMaterno;
+            this.domicilio = domicilio;
+            this.comuna = comuna;
+            this.telefono = telefono;
+            this.cuenta = cuenta;
+    }
 
-	public String getRut() {
-		return rut;
-	}
+    public String getRut() {
+            return rut;
+    }
 
-	public void setRut(String rut) {
-		this.rut = rut;
-	}
+    public void setRut(String rut) {
+            this.rut = rut;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public String getNombre() {
+            return nombre;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setNombre(String nombre) {
+            this.nombre = nombre;
+    }
 
-	public String getApellidoPaterno() {
-		return apellidoPaterno;
-	}
+    public String getApellidoPaterno() {
+            return apellidoPaterno;
+    }
 
-	public void setApellidoPaterno(String apellidoPaterno) {
-		this.apellidoPaterno = apellidoPaterno;
-	}
+    public void setApellidoPaterno(String apellidoPaterno) {
+            this.apellidoPaterno = apellidoPaterno;
+    }
 
-	public String getApellidoMaterno() {
-		return apellidoMaterno;
-	}
+    public String getApellidoMaterno() {
+            return apellidoMaterno;
+    }
 
-	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
-	}
+    public void setApellidoMaterno(String apellidoMaterno) {
+            this.apellidoMaterno = apellidoMaterno;
+    }
 
-	public String getDomicilio() {
-		return domicilio;
-	}
+    public String getDomicilio() {
+            return domicilio;
+    }
 
-	public void setDomicilio(String domicilio) {
-		this.domicilio = domicilio;
-	}
+    public void setDomicilio(String domicilio) {
+            this.domicilio = domicilio;
+    }
 
-	public String getComuna() {
-		return comuna;
-	}
+    public String getComuna() {
+            return comuna;
+    }
 
-	public void setComuna(String comuna) {
-		this.comuna = comuna;
-	}
+    public void setComuna(String comuna) {
+            this.comuna = comuna;
+    }
 
-	public String getTelefono() {
-		return telefono;
-	}
+    public String getTelefono() {
+            return telefono;
+    }
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+    public void setTelefono(String telefono) {
+            this.telefono = telefono;
+    }
 
-	public Cuenta getCuenta() {
-		return cuenta;
-	}
+    public Cuenta getCuenta() {
+            return cuenta;
+    }
 
-	public void setCuenta(Cuenta cuenta) {
-		this.cuenta = cuenta;
-	}
-        
+    public void setCuenta(Cuenta cuenta) {
+            this.cuenta = cuenta;
+    }
+    
+    //MÉTODOS
+    
+    public void visualizarDatosPersonales() {
+        System.out.println("Rut: " + this.rut);
+        System.out.println("Nombre: " + this.nombre);
+        System.out.println("Apellido paterno: " + this.apellidoPaterno);
+        System.out.println("Apellido materno: " + this.apellidoMaterno);
+        System.out.println("Domicilio: " + this.domicilio);
+        System.out.println("Comuna: " + this.comuna);
+        System.out.println("Teléfono: " + this.telefono);
+    }
+    
 }

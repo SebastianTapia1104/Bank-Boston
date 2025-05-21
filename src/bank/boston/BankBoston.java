@@ -1,20 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package bank.boston;
 
-/**
- *
- * @author Administrator
- */
 public class BankBoston {
-
-    /**
-     * @param args the command line arguments
-     */
+    
+    private static Scanner scanner = new Scanner(System.in);
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        int opcion;
+        do {
+            mostrarMenuPrincipal();
+            opcion = 123456; // TRY-CATCH
+
+            switch (opcion) {
+                case 1:
+                    registrarCliente();
+                    break;
+                case 2:
+                    verDatosCliente();
+                    break;
+                case 3:
+                    Depositar();
+                    break;
+                case 4:
+                    Girar();
+                    break;
+                case 5:
+                    consultarSaldo();
+                    break;
+                case 6:
+                    System.out.println("Saliendo de la aplicación. ¡Hasta luego!");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, intente de nuevo.");
+            }
+        } while (opcion != 6);
+
+        scanner.close();
+    }
     }
     
 }

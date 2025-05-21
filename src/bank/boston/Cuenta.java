@@ -28,7 +28,7 @@ public class Cuenta {
 		this.saldo = saldo;
 	}
 
-    // METODOS
+    // MÉTODOS
 	
 	public void depositar(int monto) {
         if (monto <= 0) {
