@@ -8,7 +8,7 @@ public class BankBoston {
         int opcion;
         do {
             mostrarMenuPrincipal();
-            opcion = 000; // TRY-CATCH
+            opcion = 111111; // TRY-CATCH
 
             switch (opcion) {
                 case 1:
