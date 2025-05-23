@@ -2,34 +2,33 @@ package bank.boston;
 
 public class Cuenta {
 
-	private int numeroCuenta;
+    private int numeroCuenta;
     private int saldo;
     
     // Constructor    
-	public Cuenta(int numeroCuenta, int saldo) {
-		this.numeroCuenta = numeroCuenta;
-		this.saldo = 0;
-	}
-	
-	// GETTERS Y SETTERS
-	public int getNumeroCuenta() {
-		return numeroCuenta;
-	}
+    public Cuenta(int numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = 0;
+    }
 
-	public void setNumeroCuenta(int numeroCuenta) {
-		this.numeroCuenta = numeroCuenta;
-	}
+    // GETTERS Y SETTERS
+    public int getNumeroCuenta() {
+        return numeroCuenta;
+    }
 
-	public int getSaldo() {
-		return saldo;
-	}
+    public void setNumeroCuenta(int numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
 
-	public void setSaldo(int saldo) {
-		this.saldo = saldo;
-	}
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
+    }
 
     // MÉTODOS
-	
 	public void depositar(int monto) {
         if (monto <= 0) {
             System.out.println("No se permite el ingreso de montos menores o iguales a cero.");
@@ -57,4 +56,10 @@ public class Cuenta {
         System.out.println("Saldo actual: " + this.saldo + " pesos"); // Current balance: [balance] pesos [cite: 27]
     }
 	
+    public void visualizarDatosCuenta() {
+        System.out.println("--- Datos de la Cuenta ---");
+        System.out.println("Número de Cuenta: " + this.numeroCuenta);
+        System.out.println("Saldo Actual: " + this.saldo + " pesos");
+    }
+    
 }

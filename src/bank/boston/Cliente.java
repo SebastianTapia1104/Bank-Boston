@@ -2,96 +2,103 @@ package bank.boston;
 
 public class Cliente {
 	
-	private String rut;
+    private int rut;
+    private String dv; // Digito verificador
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String domicilio;
     private String comuna;
-    private String telefono;
+    private int telefono;
     private Cuenta cuenta;
     
-    public Cliente(String rut, String nombre, String apellidoPaterno, String apellidoMaterno, String domicilio,
-                    String comuna, String telefono, Cuenta cuenta) {
-            if (rut.length() < 11 || rut.length() > 12) {
-        System.out.println("Error: El Rut debe tener entre 11 y 12 caracteres (incluyendo puntos y guion).");
-    }
-            this.rut = rut;
-            this.nombre = nombre;
-            this.apellidoPaterno = apellidoPaterno;
-            this.apellidoMaterno = apellidoMaterno;
-            this.domicilio = domicilio;
-            this.comuna = comuna;
-            this.telefono = telefono;
-            this.cuenta = cuenta;
+    public Cliente(int rut,String dv ,String nombre, String apellidoPaterno, String apellidoMaterno, String domicilio, String comuna, int telefono, int numeroCuenta) {
+        this.dv = dv;
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.domicilio = domicilio;
+        this.comuna = comuna;
+        this.telefono = telefono;
+        this.cuenta = new Cuenta(numeroCuenta); // Se instancia la clase Cuenta
     }
 
-    public String getRut() {
-            return rut;
+    // GETTERS Y SETTERS
+    
+    public int getRut() {
+        return rut;
     }
 
-    public void setRut(String rut) {
-            this.rut = rut;
+    public void setRut(int rut) {
+        this.rut = rut;
+    }
+    
+    public String getDv() {
+        return dv;
     }
 
+    public void setDv(String dv) {
+        this.dv = dv;
+    }
+    
     public String getNombre() {
-            return nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-            this.nombre = nombre;
+        this.nombre = nombre;
     }
 
     public String getApellidoPaterno() {
-            return apellidoPaterno;
+        return apellidoPaterno;
     }
 
     public void setApellidoPaterno(String apellidoPaterno) {
-            this.apellidoPaterno = apellidoPaterno;
+        this.apellidoPaterno = apellidoPaterno;
     }
 
     public String getApellidoMaterno() {
-            return apellidoMaterno;
+        return apellidoMaterno;
     }
 
     public void setApellidoMaterno(String apellidoMaterno) {
-            this.apellidoMaterno = apellidoMaterno;
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     public String getDomicilio() {
-            return domicilio;
+        return domicilio;
     }
 
     public void setDomicilio(String domicilio) {
-            this.domicilio = domicilio;
+        this.domicilio = domicilio;
     }
 
     public String getComuna() {
-            return comuna;
+        return comuna;
     }
 
     public void setComuna(String comuna) {
-            this.comuna = comuna;
+        this.comuna = comuna;
     }
 
-    public String getTelefono() {
-            return telefono;
+    public int getTelefono() {
+        return telefono;
     }
 
-    public void setTelefono(String telefono) {
-            this.telefono = telefono;
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
     }
 
     public Cuenta getCuenta() {
-            return cuenta;
+        return cuenta;
     }
 
     public void setCuenta(Cuenta cuenta) {
-            this.cuenta = cuenta;
+        this.cuenta = cuenta;
     }
     
     //MÉTODOS
-    
     public void visualizarDatosPersonales() {
         System.out.println("Rut: " + this.rut);
         System.out.println("Nombre: " + this.nombre);
