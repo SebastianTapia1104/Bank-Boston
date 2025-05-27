@@ -100,7 +100,7 @@ public class Cliente {
     
     //MÉTODOS
     public void visualizarDatosPersonales() {
-        System.out.println("Rut: " + this.rut);
+        System.out.println("Rut: " + this.rut + "-" + this.dv);
         System.out.println("Nombre: " + this.nombre);
         System.out.println("Apellido paterno: " + this.apellidoPaterno);
         System.out.println("Apellido materno: " + this.apellidoMaterno);

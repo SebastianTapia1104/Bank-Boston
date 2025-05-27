@@ -2,11 +2,15 @@ package bank.boston;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class BankBoston {
     
     private static Scanner scanner = new Scanner(System.in);
     private static Cliente cliente = null;
+    private static Banco banco = new Banco();
+    private static List<Cuenta> cuentas = new ArrayList<>();
     
     public static void main(String[] args) {
         int opcion;
@@ -26,16 +30,16 @@ public class BankBoston {
                     registrarCliente();
                     break;
                 case 2:
-                    verDatosCliente();
+                    verDatosCliente(banco,scanner);
                     break;
                 case 3:
-                    Depositar();
+                    depositar(banco,scanner);
                     break;
                 case 4:
-                    Girar();
+                    girar(banco,scanner);
                     break;
                 case 5:
-                    consultarSaldo();
+                    consultarSaldo(banco, scanner);
                     break;
                 case 6:
                     System.out.println("Saliendo de la aplicación. ¡Hasta luego!");
@@ -156,24 +160,77 @@ public class BankBoston {
 
         int numeroCuenta = (int) (100000000 + Math.random() * 900000000);
 
-        cliente = new Cliente(rutNumerico, dvCaracter, nombre, apellidoPaterno, apellidoMaterno, domicilio, comuna, telefonoNumerico, numeroCuenta);
+        Cliente nuevoCliente = new Cliente(rutNumerico, dvCaracter, nombre, apellidoPaterno, apellidoMaterno, domicilio, comuna, telefonoNumerico, numeroCuenta);
+        banco.agregarCliente(nuevoCliente);
         System.out.println("Cliente registrado exitosamente.");
     }
     
-    private static void verDatosCliente() {
+    
+    private static void verDatosCliente(Banco banco, Scanner scanner) {
+        System.out.println("Ingrese número de cuenta: ");
+        int numero = scanner.nextInt();
+        scanner.nextLine(); 
+        
+        Cuenta cuentaEncontrada = banco.buscarCuentaPorNumero(numero);
+        if (cuentaEncontrada != null) {
+            System.out.println("\n--- Datos de la cuenta ---");
+            System.out.println("Número de cuenta: " + cuentaEncontrada.getNumeroCuenta());
+            System.out.println("Saldo Actual: $" + cuentaEncontrada.getSaldo());
+        } else {
+            System.out.println("Cliente no encontrado, no existe ese número de cuenta.");
+        }
 
     }
         
-    private static void Depositar() {
-
+    private static void depositar(Banco banco, Scanner scanner) {
+        System.out.println("Ingrese número de cuenta: ");
+        int numero = scanner.nextInt();
+        scanner.nextLine();
+        
+        Cuenta cuenta = banco.buscarCuentaPorNumero(numero);
+        
+        if (cuenta != null) {
+            System.out.println("Ingrese monto a depositar: ");
+            int monto = scanner.nextInt();
+            
+            cuenta.depositar(monto);
+        } else {
+            System.out.println("No se encontró la cuenta");
+        }
     }
 
-    private static void Girar() {
-
+    private static void girar(Banco banco, Scanner scanner) {
+        System.out.println("Ingrese número de cuenta: ");
+        int numero = scanner.nextInt();
+        scanner.nextLine();
+        
+        Cuenta cuenta = banco.buscarCuentaPorNumero(numero);
+        
+        if (cuenta != null) {
+            System.out.println("Ingrese monto a girar: ");
+            int monto = scanner.nextInt();
+            
+            cuenta.girar(monto);
+        } else {
+            System.out.println("No se encontró la cuenta");
+        }
     }
 
-    private static void consultarSaldo() {
+    private static void consultarSaldo(Banco banco, Scanner scanner) {
+      System.out.println("Ingrese número de cuenta: ");
+        int numero = scanner.nextInt();
+        scanner.nextLine();
+        
+        Cuenta cuenta = banco.buscarCuentaPorNumero(numero);
+        
+        if (cuenta != null) {
+            System.out.println("Saldo Actual: $ " + cuenta.getSaldo());
+        } else {
+            System.out.println("No se encontró la cuenta");
+        }  
 
     }
+    
+    
     
 }

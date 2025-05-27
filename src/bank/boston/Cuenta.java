@@ -29,27 +29,29 @@ public class Cuenta {
     }
 
     // MÉTODOS
-	public void depositar(int monto) {
+	public boolean depositar(int monto) {
         if (monto <= 0) {
-            System.out.println("No se permite el ingreso de montos menores o iguales a cero.");
+            return false;
         } else {
             this.saldo += monto;
-            System.out.println("¡Depósito realizado de manera exitosa!");
-            System.out.println("Usted tiene un saldo actual de " + this.saldo + " pesos.");
+            return true;
         }
     }
 
-    public void girar(int monto) {
-        if (this.saldo <= 0) {
-            System.out.println("Para realizar un giro, cada cliente debe tener un saldo mayor que cero.");
-        } else if (monto <= 0) {
+    public boolean girar(int monto) {
+        if (monto <= 0) {
             System.out.println("No se permite el ingreso de montos menores o iguales a cero.");
-        } else if (monto > this.saldo) {
-            System.out.println("No se permite realizar giros que excedan o superen el saldo de la cuenta.");
-        } else {
-            this.saldo -= monto;
-            System.out.println("Giro realizado con éxito. Saldo actual: " + this.saldo + " pesos.");
+            return false;
         }
+        if (saldo >= monto) {
+            saldo -= monto;
+            System.out.println("Giro realizado con éxito.");
+            return true;
+        } else {
+            System.out.println("Saldo insuficiente.");
+            return false;
+        }
+        
     }
 
     public void consultarSaldo() {
