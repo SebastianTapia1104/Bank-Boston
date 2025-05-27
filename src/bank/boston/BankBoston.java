@@ -1,16 +1,13 @@
 package bank.boston;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
 
 public class BankBoston {
     
     private static Scanner scanner = new Scanner(System.in);
-    private static Cliente cliente = null;
-    private static Banco banco = new Banco();
-    private static List<Cuenta> cuentas = new ArrayList<>();
+    private static ArrayList<Cliente> clientes = new ArrayList<>();
     
     public static void main(String[] args) {
         int opcion;
@@ -30,16 +27,16 @@ public class BankBoston {
                     registrarCliente();
                     break;
                 case 2:
-                    verDatosCliente(banco,scanner);
+                    verDatosCliente();
                     break;
                 case 3:
-                    depositar(banco,scanner);
+                    Depositar();
                     break;
                 case 4:
-                    girar(banco,scanner);
+                    Girar();
                     break;
                 case 5:
-                    consultarSaldo(banco, scanner);
+                    consultarSaldo();
                     break;
                 case 6:
                     System.out.println("Saliendo de la aplicación. ¡Hasta luego!");
@@ -51,7 +48,7 @@ public class BankBoston {
         scanner.close();
     }
     
-    // Menú principal
+    // MENÚ PRINCIPAL
     private static void mostrarMenuPrincipal() {
         System.out.println("\n--- Menú Principal Bank Boston ---");
         System.out.println("1. Registrar cliente");
@@ -63,6 +60,7 @@ public class BankBoston {
         System.out.print("Ingrese una opción: ");
     }
     
+    // FUNCIONES DEL MENÚ
     private static void registrarCliente() {
         System.out.println("--- Registro de Cliente ---");
         String nombre, apellidoPaterno, apellidoMaterno, domicilio, comuna, dvCaracter;
@@ -123,7 +121,6 @@ public class BankBoston {
                 scanner.nextLine();
             }
         } while (!telefonoValido);
-
         // RUT
         boolean rutValido = false;
         do {
@@ -143,7 +140,6 @@ public class BankBoston {
                 scanner.nextLine();
             }
         } while (!rutValido);
-
         // Digito verificador
         boolean dvValido = false;
         do {
@@ -160,77 +156,134 @@ public class BankBoston {
 
         int numeroCuenta = (int) (100000000 + Math.random() * 900000000);
 
-        Cliente nuevoCliente = new Cliente(rutNumerico, dvCaracter, nombre, apellidoPaterno, apellidoMaterno, domicilio, comuna, telefonoNumerico, numeroCuenta);
-        banco.agregarCliente(nuevoCliente);
+        Cliente cliente = new Cliente(rutNumerico, dvCaracter, nombre, apellidoPaterno, apellidoMaterno, domicilio, comuna, telefonoNumerico, numeroCuenta);
         System.out.println("Cliente registrado exitosamente.");
+        clientes.add(cliente);
     }
-    
-    
-    private static void verDatosCliente(Banco banco, Scanner scanner) {
-        System.out.println("Ingrese número de cuenta: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine(); 
-        
-        Cuenta cuentaEncontrada = banco.buscarCuentaPorNumero(numero);
-        if (cuentaEncontrada != null) {
-            System.out.println("\n--- Datos de la cuenta ---");
-            System.out.println("Número de cuenta: " + cuentaEncontrada.getNumeroCuenta());
-            System.out.println("Saldo Actual: $" + cuentaEncontrada.getSaldo());
-        } else {
-            System.out.println("Cliente no encontrado, no existe ese número de cuenta.");
-        }
 
-    }
-        
-    private static void depositar(Banco banco, Scanner scanner) {
-        System.out.println("Ingrese número de cuenta: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine();
-        
-        Cuenta cuenta = banco.buscarCuentaPorNumero(numero);
-        
-        if (cuenta != null) {
-            System.out.println("Ingrese monto a depositar: ");
-            int monto = scanner.nextInt();
-            
-            cuenta.depositar(monto);
+    private static void verDatosCliente() {
+        System.out.println("\n--- Ver Datos de Cliente ---");
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados aún. Por favor, registre un cliente primero.");
+            return;
+        }
+        System.out.print("Ingrese el RUT del cliente (solo números, sin puntos ni guion): ");
+        int rutBuscar;
+        try {
+            rutBuscar = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese solo números para el RUT.");
+            scanner.nextLine();
+            return;
+        }
+        Cliente clienteEncontrado = buscarClientePorRut(rutBuscar);
+        if (clienteEncontrado != null) {
+            clienteEncontrado.visualizarDatosPersonales();
+            clienteEncontrado.getCuenta().visualizarDatosCuenta();
         } else {
-            System.out.println("No se encontró la cuenta");
+            System.out.println("Cliente con RUT " + rutBuscar + " no encontrado.");
         }
     }
-
-    private static void girar(Banco banco, Scanner scanner) {
-        System.out.println("Ingrese número de cuenta: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine();
         
-        Cuenta cuenta = banco.buscarCuentaPorNumero(numero);
-        
-        if (cuenta != null) {
-            System.out.println("Ingrese monto a girar: ");
-            int monto = scanner.nextInt();
-            
-            cuenta.girar(monto);
+    private static void Depositar() {
+        System.out.println("\n--- Realizar Depósito ---");
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados aún. Por favor, registre un cliente primero.");
+            return;
+        }
+        System.out.print("Ingrese el RUT del cliente para depositar: ");
+        int rutBuscar;
+        try {
+            rutBuscar = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese solo números para el RUT.");
+            scanner.nextLine();
+            return;
+        }
+        Cliente clienteEncontrado = buscarClientePorRut(rutBuscar);
+        if (clienteEncontrado != null) {
+            System.out.print("Ingrese la cantidad a depositar: ");
+            int monto;
+            try {
+                monto = scanner.nextInt();
+                scanner.nextLine();
+                clienteEncontrado.getCuenta().depositar(monto);
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese solo números para el monto.");
+                scanner.nextLine();
+            }
         } else {
-            System.out.println("No se encontró la cuenta");
+            System.out.println("Cliente con RUT " + rutBuscar + " no encontrado.");
         }
     }
 
-    private static void consultarSaldo(Banco banco, Scanner scanner) {
-      System.out.println("Ingrese número de cuenta: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine();
-        
-        Cuenta cuenta = banco.buscarCuentaPorNumero(numero);
-        
-        if (cuenta != null) {
-            System.out.println("Saldo Actual: $ " + cuenta.getSaldo());
+    private static void Girar() {
+        System.out.println("\n--- Realizar Giro ---");
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados aún. Por favor, registre un cliente primero.");
+            return;
+        }
+        System.out.print("Ingrese el RUT del cliente para girar: ");
+        int rutBuscar;
+        try {
+            rutBuscar = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese solo números para el RUT.");
+            scanner.nextLine();
+            return;
+        }
+        Cliente clienteEncontrado = buscarClientePorRut(rutBuscar);
+        if (clienteEncontrado != null) {
+            System.out.print("Ingrese la cantidad a girar: ");
+            int monto;
+            try {
+                monto = scanner.nextInt();
+                scanner.nextLine();
+                clienteEncontrado.getCuenta().girar(monto);
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese solo números para el monto.");
+                scanner.nextLine();
+            }
         } else {
-            System.out.println("No se encontró la cuenta");
-        }  
+            System.out.println("Cliente con RUT " + rutBuscar + " no encontrado.");
+        }
+    }
 
+    private static void consultarSaldo() {
+        System.out.println("\n--- Consultar Saldo ---");
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados aún. Por favor, registre un cliente primero.");
+            return;
+        }
+        System.out.print("Ingrese el RUT del cliente para consultar saldo: ");
+        int rutBuscar;
+        try {
+            rutBuscar = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese solo números para el RUT.");
+            scanner.nextLine();
+            return;
+        }
+        Cliente clienteEncontrado = buscarClientePorRut(rutBuscar);
+        if (clienteEncontrado != null) {
+            clienteEncontrado.getCuenta().consultarSaldo(); 
+        } else {
+            System.out.println("Cliente con RUT " + rutBuscar + " no encontrado.");
+        }
     }
     
-    
+    //AUXILIARES
+    private static Cliente buscarClientePorRut(int rut) {
+        for (Cliente c : clientes) {
+            if (c.getRut() == rut) {
+                return c;
+            }
+        }
+        return null;
+    }
     
 }
