@@ -1,14 +1,19 @@
 package bank.boston;
 
-public class Cuenta {
+public abstract class Cuenta {
 
-    private int numeroCuenta;
-    private int saldo;
+    protected int numeroCuenta;
+    protected double saldo;
     
     // Constructor    
     public Cuenta(int numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
-        this.saldo = 0;
+        this.saldo = 0.0;
+    }
+    
+    public Cuenta(int numeroCuenta, double saldoInicial) {
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = saldoInicial;
     }
 
     // GETTERS Y SETTERS
@@ -20,16 +25,16 @@ public class Cuenta {
         this.numeroCuenta = numeroCuenta;
     }
 
-    public int getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(int saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
     // MÉTODOS
-	public void depositar(int monto) {
+    public void depositar(double monto) {
         if (monto <= 0) {
             System.out.println("No se permite el ingreso de montos menores o iguales a cero.");
         } else {
@@ -39,7 +44,7 @@ public class Cuenta {
         }
     }
 
-    public void girar(int monto) {
+    public void girar(double monto) {
         if (this.saldo <= 0) {
             System.out.println("Para realizar un giro, cada cliente debe tener un saldo mayor que cero.");
         } else if (monto <= 0) {
@@ -53,13 +58,10 @@ public class Cuenta {
     }
 
     public void consultarSaldo() {
-        System.out.println("Saldo actual: $" + this.saldo + " CLP"); // Current balance: [balance] pesos [cite: 27]
+        System.out.println("Saldo actual: $" + this.saldo + " CLP");
     }
-	
-    public void visualizarDatosCuenta() {
-        System.out.println("--- Datos de la Cuenta ---");
-        System.out.println("Número de Cuenta: " + this.numeroCuenta);
-        System.out.println("Saldo Actual: $" + this.saldo + " CLP");
-    }
+
+    // Método que antes era visualizarDatosCuenta, ahora será abstracto para que cada subclase lo implemente específicamente
+    public abstract void visualizarDatosCuenta();
     
 }

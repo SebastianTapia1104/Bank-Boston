@@ -1,6 +1,9 @@
 package bank.boston;
 
-public class Cliente {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Cliente implements infoCliente {
 	
     private int rut;
     private String dv; // Digito verificador
@@ -10,20 +13,20 @@ public class Cliente {
     private String domicilio;
     private String comuna;
     private int telefono;
-    private Cuenta cuenta;
+    private List<Cuenta> cuentas;
     
-    public Cliente(int rut,String dv ,String nombre, String apellidoPaterno, String apellidoMaterno, String domicilio, String comuna, int telefono, int numeroCuenta) {
-        this.dv = dv;
+    public Cliente(int rut, String dv, String nombre, String apellidoPaterno, String apellidoMaterno,
+                   String domicilio, String comuna, int telefono) {
         this.rut = rut;
+        this.dv = dv;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.domicilio = domicilio;
         this.comuna = comuna;
         this.telefono = telefono;
-        this.cuenta = new Cuenta(numeroCuenta); // Se instancia la clase Cuenta
+        this.cuentas = new ArrayList<>();
     }
-
     // GETTERS Y SETTERS
     
     public int getRut() {
@@ -90,24 +93,32 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public Cuenta getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public List<Cuenta> getCuentas() {
+        return cuentas;
     }
     
     //MÉTODOS
-    public void visualizarDatosPersonales() {
-        System.out.println("Rut: " + this.rut);
-        System.out.println("Digito verificador: " + this.dv);
-        System.out.println("Nombre: " + this.nombre);
-        System.out.println("Apellido paterno: " + this.apellidoPaterno);
-        System.out.println("Apellido materno: " + this.apellidoMaterno);
-        System.out.println("Domicilio: " + this.domicilio);
-        System.out.println("Comuna: " + this.comuna);
+    @Override
+    public void mostrarInformacion() {
+        System.out.println("\n--- Datos Personales del Cliente ---");
+        System.out.println("Rut: " + this.rut + "-" + this.dv);
+        System.out.println("Nombre Completo: " + this.nombre + " " + this.apellidoPaterno + " " + this.apellidoMaterno);
+        System.out.println("Domicilio: " + this.domicilio + ", " + this.comuna);
         System.out.println("Teléfono: " + this.telefono);
+
+        System.out.println("\n--- Cuentas del Cliente ---");
+        if (cuentas.isEmpty()) {
+            System.out.println("El cliente no tiene cuentas registradas.");
+        } else {
+            for (Cuenta c : cuentas) {
+                c.visualizarDatosCuenta();
+                System.out.println("--------------------");
+            }
+        }
+    }
+    
+    public void agregarCuenta(Cuenta nuevaCuenta) {
+        this.cuentas.add(nuevaCuenta);
     }
     
 }
