@@ -31,7 +31,10 @@ public class CuentaAhorro extends Cuenta {
         System.out.println("Intereses aplicados. Nuevo saldo: $" + this.saldo + " CLP");
     }
     
-    public double proyectarSaldo(int años) {
+    
+    // Sobrecarga
+    // Podemos consultar el saldo tras hacer una proyeccion en años
+    public double consultarSaldo(int años) {
         double saldoProyectado = this.saldo * Math.pow((1 + tasaInteres), años);
         return saldoProyectado;
     }
@@ -43,9 +46,9 @@ public class CuentaAhorro extends Cuenta {
         System.out.println("Saldo Actual: $" + String.format("%.2f", this.getSaldo()) + " CLP");
         System.out.println("Tasa de Interés Anual: " + String.format("%.2f", (this.tasaInteres * 100)) + "%");
         System.out.println("\n--- Proyección de Saldo (interés compuesto) ---");
-        double saldoProyectado3Años = proyectarSaldo(3);
+        double saldoProyectado3Años = consultarSaldo(3);
         System.out.println("Saldo en 3 años: $" + String.format("%.2f", saldoProyectado3Años) + " CLP");
-        double saldoProyectado5Años = proyectarSaldo(5);
+        double saldoProyectado5Años = consultarSaldo(5);
         System.out.println("Saldo en 5 años: $" + String.format("%.2f", saldoProyectado5Años) + " CLP");
     }
 }
