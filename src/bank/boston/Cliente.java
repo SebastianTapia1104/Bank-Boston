@@ -1,8 +1,12 @@
 package bank.boston;
 
+import interfaces.infoCliente;
+import modelo.Cuenta;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// Uso de la interface
 public class Cliente implements infoCliente {
 	
     private int rut;

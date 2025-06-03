@@ -1,5 +1,8 @@
-package bank.boston;
+package modelo;
 
+import modelo.Cuenta;
+
+// Herencia
 public class CuentaCorriente extends Cuenta {
     
     private double lineaCredito;

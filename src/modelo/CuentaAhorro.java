@@ -1,5 +1,9 @@
-package bank.boston;
+package modelo;
 
+import modelo.Cuenta;
+
+
+// Herencia
 public class CuentaAhorro extends Cuenta {
 
     private double tasaInteres;

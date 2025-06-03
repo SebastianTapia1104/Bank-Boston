@@ -1,4 +1,4 @@
-package bank.boston;
+package modelo;
 
 public abstract class Cuenta {
 

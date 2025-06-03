@@ -1,4 +1,11 @@
+// Paquete principal donde va el main
 package bank.boston;
+
+// Importar paquetes
+import modelo.CuentaCorriente;
+import modelo.CuentaCredito;
+import modelo.CuentaAhorro;
+import modelo.Cuenta;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -60,7 +67,9 @@ public class BankBoston {
         System.out.println("6. Salir");
         System.out.print("Ingrese una opción: ");
     }
-
+    
+    // Busqueda por rut, permite continuar con el registro de nuevo cliente.
+    // Si el cliente ya tiene una cuenta, puede registrar otro tipo de cuenta y quedarán ambas asociadas al rut
     private static void registrarOAnadirCuentaACliente() {
         System.out.println("\n--- Registrar Cliente o Abrir Nueva Cuenta ---");
         int rutBuscar = obtenerEnteroValido("Ingrese el RUT del cliente (solo números, sin puntos ni guion): ");
@@ -73,7 +82,8 @@ public class BankBoston {
             abrirNuevaCuenta(clienteEncontrado);
         }
     }
-
+    
+    // Formulario para crear el cliente en el sistema, con sus respectivas validaciones
     private static void registrarNuevoCliente(int rutExistente) {
         System.out.println("\n--- Formulario de Registro de Nuevo Cliente ---");
         String nombre, apellidoPaterno, apellidoMaterno, domicilio, comuna, dvCaracter;
@@ -111,7 +121,8 @@ public class BankBoston {
         System.out.println("Cliente '" + cliente.getNombre() + " " + cliente.getApellidoPaterno() + "' registrado exitosamente.");
         abrirNuevaCuenta(cliente);
     }
-
+    
+    // Formulario para seleccionar que tipo de cuenta se quiere crear
     private static void abrirNuevaCuenta(Cliente cliente) {
         System.out.println("\n--- Apertura de Nueva Cuenta para " + cliente.getNombre() + " ---");
         Cuenta nuevaCuenta = null;
@@ -125,6 +136,8 @@ public class BankBoston {
             System.out.print("Ingrese una opción: ");
             tipoCuenta = obtenerEnteroValido(""); 
             boolean yaTieneCuentaDeTipo = false;
+            
+            // Validacion de que se cree una cuenta de un tipo de cuenta que no tenga
             for (Cuenta c : cliente.getCuentas()) {
                 if (tipoCuenta == 1 && c instanceof CuentaCorriente) {
                     yaTieneCuentaDeTipo = true;
@@ -198,7 +211,8 @@ public class BankBoston {
             System.out.println("Cuenta " + nuevaCuenta.getClass().getSimpleName() + " (Número: " + nuevaCuenta.getNumeroCuenta() + ") abierta exitosamente para " + cliente.getNombre() + ".");
         }
     }
-
+    
+    // Muestra la informacion actual de las cuentas del cliente, luego de validarlo
     private static void verDatosCliente() {
         System.out.println("\n--- Ver Datos de Cliente ---");
         if (clientes.isEmpty()) {
@@ -214,7 +228,8 @@ public class BankBoston {
             System.out.println("Cliente con RUT " + rutBuscar + " no encontrado.");
         }
     }
-
+    
+    // Operaciones bancarias disponibles luego de validar
     private static void realizarOperacionEnCuenta(String tipoOperacion) {
         System.out.println("\n--- " + tipoOperacion + " en Cuenta ---");
         if (clientes.isEmpty()) {
@@ -246,7 +261,8 @@ public class BankBoston {
             }
         }
     }
-
+    
+    // Buscador de clientes por Rut
     private static Cliente buscarClientePorRut(int rut) {
         for (Cliente c : clientes) {
             if (c.getRut() == rut) {
@@ -255,7 +271,8 @@ public class BankBoston {
         }
         return null;
     }
-
+    
+    // Validacion de que exista la cuenta con la que se quier trabajar 
     private static Cuenta seleccionarCuenta(Cliente cliente, String proposito) {
         List<Cuenta> cuentasDelCliente = cliente.getCuentas();
         if (cuentasDelCliente.isEmpty()) {
@@ -266,7 +283,7 @@ public class BankBoston {
         for (int i = 0; i < cuentasDelCliente.size(); i++) {
             Cuenta c = cuentasDelCliente.get(i);
             String tipo = c.getClass().getSimpleName();
-            System.out.println((i + 1) + ". " + tipo + " (Número: " + c.getNumeroCuenta() + ", Saldo: $" + String.format("%.2f", c.getSaldo()) + " CLP)");
+            System.out.println((i + 1) + ". " + tipo + " (Número: " + c.getNumeroCuenta() + ")");
         }
         int seleccion = obtenerEnteroValido("Seleccione el número de la cuenta para " + proposito + ": ");
         if (seleccion > 0 && seleccion <= cuentasDelCliente.size()) {
@@ -276,7 +293,8 @@ public class BankBoston {
             return null;
         }
     }
-
+    
+    // Generador de numeros de cuenta 
     private static int generarNumeroCuentaUnico() {
         int nuevoNumero;
         boolean esUnico;
@@ -295,7 +313,11 @@ public class BankBoston {
         } while (!esUnico);
         return nuevoNumero;
     }
-
+    
+    
+    // VALIDACIONES
+    
+    // Validación de texto no vacio
     private static String obtenerStringNoVacio(String mensaje) {
         String input;
         do {
@@ -307,7 +329,8 @@ public class BankBoston {
         } while (input.trim().isEmpty());
         return input;
     }
-
+    
+    // Validación de enteros
     private static int obtenerEnteroValido(String mensaje) {
         while (true) {
             System.out.print(mensaje);
@@ -321,7 +344,8 @@ public class BankBoston {
             }
         }
     }
-
+    
+    // Validación de doubles
     private static double obtenerDoubleValido(String mensaje) {
         while (true) {
             System.out.print(mensaje);
